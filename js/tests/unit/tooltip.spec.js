@@ -387,6 +387,50 @@ describe('Tooltip', () => {
       tooltip.show()
     })
 
+    it('should replace placement right by end when placement specified', done => {
+      fixtureEl.innerHTML = '<a href="#" rel="tooltip" title="Another tooltip">'
+
+      const tooltipEl = fixtureEl.querySelector('a')
+      const tooltip = new Tooltip(tooltipEl, {
+        placement: 'right'
+      })
+
+      tooltipEl.addEventListener('inserted.bs.tooltip', () => {
+        expect(tooltip.getTipElement().classList.contains('bs-tooltip-end')).toEqual(true)
+      })
+
+      tooltipEl.addEventListener('shown.bs.tooltip', () => {
+        const tooltipShown = document.querySelector('.tooltip')
+
+        expect(tooltipShown.classList.contains('bs-tooltip-end')).toEqual(true)
+        done()
+      })
+
+      tooltip.show()
+    })
+
+    it('should replace placement left by start when placement specified', done => {
+      fixtureEl.innerHTML = '<a href="#" rel="tooltip" title="Another tooltip">'
+
+      const tooltipEl = fixtureEl.querySelector('a')
+      const tooltip = new Tooltip(tooltipEl, {
+        placement: 'left'
+      })
+
+      tooltipEl.addEventListener('inserted.bs.tooltip', () => {
+        expect(tooltip.getTipElement().classList.contains('bs-tooltip-start')).toEqual(true)
+      })
+
+      tooltipEl.addEventListener('shown.bs.tooltip', () => {
+        const tooltipShown = document.querySelector('.tooltip')
+
+        expect(tooltipShown.classList.contains('bs-tooltip-start')).toEqual(true)
+        done()
+      })
+
+      tooltip.show()
+    })
+
     it('should not error when trying to show a tooltip that has been removed from the dom', done => {
       fixtureEl.innerHTML = '<a href="#" rel="tooltip" title="Another tooltip">'
 
